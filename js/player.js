@@ -11,10 +11,17 @@ export class Player {
         this.grounded = false;
     }
 
-    update(keys, canvasHeight) {
+    update(keys, canvasWidth, canvasHeight) {
         if (keys['ArrowLeft'] || keys['KeyA']) this.x -= this.speed;
         if (keys['ArrowRight'] || keys['KeyD']) this.x += this.speed;
 
+
+        // Не даём уехать за границы экрана!
+        if (this.x < 0) this.x = 0;
+        if (this.x + this.width > canvasWidth) {
+           this.x = canvasWidth - this.width;
+        }
+    
         if ((keys['Space'] || keys['ArrowUp'] || keys['KeyW']) && this.grounded) {
             this.velY = this.jumpForce;
             this.grounded = false;
