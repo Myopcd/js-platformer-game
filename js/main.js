@@ -12,6 +12,7 @@ let level = new Level();
 let keys = {};
 let score = 0;
 let isGameWon = false;
+let cameraY = 0;
 
 window.addEventListener('keydown', (e) => {
     if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
@@ -62,14 +63,29 @@ function checkCoins() {
 function gameloop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    if (!isGameWon) {
+        player.update(keys, canvas.width, canvas.height, level.platforms);
+        checkCoins();
+
+        // Плавное слежение камеры за игроком, когда он поднимается выше середины экрана
+        const anchorY = player.y > player.lastGroundY + 150 ? player.y : player.lastGroundY;
+        const targetCameraY= Math.max(0, 230 - player.y);
+        cameraY += (targetCameraY - cameraY) * 0.08;
+    }
+
+    //Сдвигаем камеру перед отрисовкой игрового мира
+    ctx.save();
+    ctx.translate(0, cameraY);
+
     //Отрисовка земли
     ctx.fillStyle = '#2ed573';
     ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
 
     level.draw(ctx);
-    player.update(keys, canvas.width, canvas.height, level.platforms);
-    checkCoins();
     player.draw(ctx);
+
+    //Возвращаем координаты холста в исходное положение
+    ctx.restore();
 
     requestAnimationFrame(gameloop);
 }

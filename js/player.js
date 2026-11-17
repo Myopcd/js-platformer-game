@@ -9,6 +9,7 @@ export class Player {
         this.gravity = 0.6;
         this.jumpForce = -12;
         this.grounded = false;
+        this.lastGroundY = y;
     }
 
     update(keys, canvasWidth, canvasHeight, platforms) {
@@ -46,6 +47,7 @@ export class Player {
                 this.y = platform.y - this.height;
                 this.velY = 0;
                 this.grounded = true;
+                this.lastGroundY = this.y;
             }
         }
         
@@ -54,6 +56,7 @@ export class Player {
             this.y = canvasHeight - 40 - this.height;
             this.velY = 0;
             this.grounded = true;
+            this.lastGroundY = true;
         }
     }
 
@@ -75,4 +78,4 @@ export class Player {
         ctx.fillRect(this.x + 8 + eyeOffsetX, this.y + 12, 4, 4);
         ctx.fillRect(this.x + 24 + eyeOffsetX, this.y + 12, 4, 4);
     }
-}
+} 

@@ -3,16 +3,22 @@ export class Level {
         this.platforms = [
             { x: 200, y: 330, width: 140, height: 20},
             { x: 420, y: 260, width: 140, height: 20},
-            { x: 180, y: 180, width: 140, height: 20},
-            { x: 480, y: 120, width: 160, height: 20}
+            { x: 180, y: 170, width: 140, height: 20},
+            { x: 450, y: 90, width: 150, height: 20},
+            { x: 220, y: 10, width: 140, height: 20},
+            { x: 460, y: -70, width: 140, height: 20},
+            { x: 190, y: -150, width: 140, height: 20},
+            { x: 430, y: -230, width: 140, height: 20},
+            { x: 210, y: -310, width: 140, height: 20},
+            { x: 380, y: -390, width: 160, height: 20}
         ];
 
-        this.coins = [
-            { x:270, y: 295, radius: 12, collected: false },
-            { x:490, y: 225, radius: 12, collected: false },
-            { x:250, y: 145, radius: 12, collected: false },
-            { x:560, y: 85, radius: 12, collected: false }
-        ]
+        this.coins = this.platforms.map((platform) => ({
+            x: platform.x + platform.width / 2,
+            y: platform.y - 30,
+            radius: 12,
+            collected: false
+        }));
     }
 
     draw(ctx) {
