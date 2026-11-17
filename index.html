@@ -9,7 +9,14 @@
 <body>
     <div class="game-container">
         <div id="scoreBoard">Монеты: 0 / 4</div>
-    <canvas id="gameCanvas" width="800" height="450"></canvas>
+
+        <div id="winScreen" class="hidden">
+            <h1>Победа!</h1>
+            <p>Вы собрали все монеты</p>
+            <button id="restartBtn">Играть снова</button>
+        </div>
+
+        <canvas id="gameCanvas" width="800" height="450"></canvas>
     </div>
     <script type="module" src="js/main.js"></script>   
 </body>

@@ -4,11 +4,14 @@ import { Level } from './level.js';
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const scoreBoard = document.getElementById('scoreBoard');
+const winScreen = document.getElementById('winScreen');
+const restartBtn = document.getElementById('restartBtn');
 
-const player = new Player(100, 200);
-const level = new Level();
+let player = new Player(100, 200);
+let level = new Level();
 let keys = {};
 let score = 0;
+let isGameWon = false;
 
 window.addEventListener('keydown', (e) => {
     if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
@@ -25,6 +28,18 @@ window.addEventListener('blur', () => {
     keys = {};
 });
 
+function restartGame() {
+    player = new Player (100, 200);
+    level = new Level ();
+    score = 0;
+    isGameWon = false;
+    keys = {};
+    scoreBoard.textContent = `Монеты: 0 / ${level.coins.length}`;
+    winScreen.classList.add('hidden');
+}
+
+restartBtn.addEventListener('click', restartGame);
+
 function checkCoins() {
     for (const coin of level.coins) {
         if (!coin.collected) {
@@ -35,6 +50,11 @@ function checkCoins() {
               coin.collected = true;
               score += 1;
               scoreBoard.textContent = `Монеты: ${score} / ${level.coins.length}`;
+
+              if (score === level.coins.length) {
+                isGameWon = true;
+                winScreen.classList.remove('hidden');
+              }
           }
         }
     }

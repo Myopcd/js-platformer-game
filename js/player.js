@@ -60,5 +60,19 @@ export class Player {
     draw(ctx) {
         ctx.fillStyle = '#ff4757';
         ctx.fillRect(this.x, this.y, this.width, this.height);
+
+        // Смещение глаз в сторону движения
+        const eyeOffsetX = this.facing === 'right' ? 6 : -6;
+         
+        // Белки глаз
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(this.x + 8 + eyeOffsetX, this.y + 10, 8, 8);
+        ctx.fillRect(this.x + 24 + eyeOffsetX, this.y + 10, 8, 8);
+
+        // Зрачки
+        ctx.fillStyle = "#2f3542";
+        const pupilShift = this.facing === 'right' ? 4 : 0;
+        ctx.fillRect(this.x + 8 + eyeOffsetX, this.y + 12, 4, 4);
+        ctx.fillRect(this.x + 24 + eyeOffsetX, this.y + 12, 4, 4);
     }
 }
