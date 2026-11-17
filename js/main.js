@@ -1,9 +1,11 @@
 import { Player } from './player.js';
+import { Level } from './level.js';
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 const player = new Player(100, 200);
+const level = new Level();
 let keys = {};
 
 window.addEventListener('keydown', (e) => {
@@ -28,7 +30,8 @@ function gameloop() {
     ctx.fillStyle = '#2ed573';
     ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
 
-    player.update(keys, canvas.width, canvas.height);
+    level.draw(ctx);
+    player.update(keys, canvas.width, canvas.height, level.platforms);
     player.draw(ctx);
 
     requestAnimationFrame(gameloop);

@@ -11,7 +11,7 @@ export class Player {
         this.grounded = false;
     }
 
-    update(keys, canvasWidth, canvasHeight) {
+    update(keys, canvasWidth, canvasHeight, platforms) {
         if (keys['ArrowLeft'] || keys['KeyA']) this.x -= this.speed;
         if (keys['ArrowRight'] || keys['KeyD']) this.x += this.speed;
 
@@ -27,9 +27,29 @@ export class Player {
             this.grounded = false;
         }
 
+        // Запоминаем прошлую позицию по Y до падения
+        const prevY = this.y;
+
         this.velY += this.gravity;
         this.y += this.velY;
+        this.grounded = false;
 
+        // Проверка приземления на платформы (только при падении сверху)
+        for (const platform of platforms) {
+            if (
+                this.velY >= 0 &&
+                this.x + this.width > platform.x &&
+                this.x < platform.x + platform.width &&
+                prevY + this.height <= platform.y &&
+                this.y + this.height >= platform.y
+            ) {
+                this.y = platform.y - this.height;
+                this.velY = 0;
+                this.grounded = true;
+            }
+        }
+        
+        // Проверка приземления на зеленую землю
         if (this.y + this.height >= canvasHeight - 40) {
             this.y = canvasHeight - 40 - this.height;
             this.velY = 0;
@@ -42,4 +62,3 @@ export class Player {
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
-
