@@ -9,9 +9,15 @@
 <body>
     <div class="game-container">
         <div id="scoreBoard">Монеты: 0 / 10</div>
+        <div id="timerBoard">Время: 0.0</div>
 
         <div id="winScreen" class="hidden">
             <h1>Победа!</h1>
+            <p id="finalTimeText">Ваше время: 0.0 с</p>
+            <div class="record-box">
+                <h3>Топ-3 рекорда:</h3>
+                <ol id="recordsList"></ol>
+            </div>
             <p>Вы собрали все монеты</p>
             <button id="restartBtn">Играть снова</button>
         </div>
